@@ -1,13 +1,9 @@
-package com.example.parinaz.chainstoresapp.RoomDb;
+package com.example.parinaz.chainstoresapp.roomdb;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 /**
  * Created by parinaz on 11/18/19.
