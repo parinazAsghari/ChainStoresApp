@@ -1,7 +1,6 @@
 package com.example.parinaz.chainstoresapp.fragment;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,8 +18,8 @@ import com.example.parinaz.chainstoresapp.ClickListener;
 //import com.example.parinaz.chainstoresapp.MarkedProductsDBHelper;
 import com.example.parinaz.chainstoresapp.R;
 import com.example.parinaz.chainstoresapp.RecyclerTouchListener;
-import com.example.parinaz.chainstoresapp.RoomDb.markedDatabase;
-import com.example.parinaz.chainstoresapp.RoomDb.markedEntity;
+import com.example.parinaz.chainstoresapp.roomdb.markedDatabase;
+import com.example.parinaz.chainstoresapp.roomdb.markedEntity;
 import com.example.parinaz.chainstoresapp.activity.ProductDetailsActivity;
 import com.example.parinaz.chainstoresapp.adapter.MarkedProductsAdapter;
 import com.example.parinaz.chainstoresapp.object.MarkedProducts;

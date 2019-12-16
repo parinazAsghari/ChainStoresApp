@@ -1,4 +1,4 @@
-package com.example.parinaz.chainstoresapp.RoomDb;
+package com.example.parinaz.chainstoresapp.roomdb;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

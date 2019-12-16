@@ -11,14 +11,13 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.parinaz.chainstoresapp.AppController;
 //import com.example.parinaz.chainstoresapp.MarkedProductsDBHelper;
 import com.example.parinaz.chainstoresapp.R;
-import com.example.parinaz.chainstoresapp.RoomDb.markedDatabase;
-import com.example.parinaz.chainstoresapp.RoomDb.markedEntity;
+import com.example.parinaz.chainstoresapp.roomdb.markedDatabase;
+import com.example.parinaz.chainstoresapp.roomdb.markedEntity;
 import com.example.parinaz.chainstoresapp.data.DataLoader;
 import com.example.parinaz.chainstoresapp.data.Url;
 import com.example.parinaz.chainstoresapp.data.VolleyCallbackCategories;

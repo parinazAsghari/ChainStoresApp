@@ -12,8 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.parinaz.chainstoresapp.R;
-import com.example.parinaz.chainstoresapp.RoomDb.markedEntity;
-import com.example.parinaz.chainstoresapp.object.MarkedProducts;
+import com.example.parinaz.chainstoresapp.roomdb.markedEntity;
 import com.example.parinaz.chainstoresapp.object.Store;
 import com.squareup.picasso.Picasso;
 
