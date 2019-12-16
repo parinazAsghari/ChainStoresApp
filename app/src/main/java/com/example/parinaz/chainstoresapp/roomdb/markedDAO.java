@@ -1,5 +1,6 @@
-package com.example.parinaz.chainstoresapp.RoomDb;
+package com.example.parinaz.chainstoresapp.roomdb;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface markedDAO {
 
     @Query("SELECT * FROM marked_products")
-    List<markedEntity> getAll();
+    LiveData<List<markedEntity>> getAll();
 
     @Query("SELECT * FROM marked_products WHERE code LIKE :code " + "  AND branchid LIKE :branchid LIMIT 1")
   boolean isMarked(int code , int branchid);

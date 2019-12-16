@@ -19,6 +19,7 @@ public abstract class markedDatabase extends RoomDatabase {
     private static markedDatabase instance;
     public abstract markedDAO markedDAO();
     public static markedDatabase getInstance(Context context){
+        //singleton repository(یک نفر میتونه تغییر بده.. با... get instance میتونیم بهش دسترسی پیدا کنیم)
         if(instance==null){
             //ینی تا حالا دیتابیس ایجاد نشده
             instance= Room.databaseBuilder(context,markedDatabase.class,"marked_products_db").allowMainThreadQueries().build();
