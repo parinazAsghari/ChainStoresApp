@@ -45,7 +45,15 @@ public class MarkedProductsAdapter extends RecyclerView.Adapter<MarkedProductsAd
         holder.bind(markedEntity);
     }
 
+
+  public   void setMarked(List<markedEntity> markedEntities){
+        productList = markedEntities;
+        notifyDataSetChanged();
+    }
+
+
     @Override
+
     public int getItemCount() {
         return productList.size();
     }
