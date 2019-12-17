@@ -1,9 +1,16 @@
 package com.example.parinaz.chainstoresapp.fragment;
 
+import android.app.Application;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +25,7 @@ import com.example.parinaz.chainstoresapp.ClickListener;
 //import com.example.parinaz.chainstoresapp.MarkedProductsDBHelper;
 import com.example.parinaz.chainstoresapp.R;
 import com.example.parinaz.chainstoresapp.RecyclerTouchListener;
+import com.example.parinaz.chainstoresapp.roomdb.MarkedViewModel;
 import com.example.parinaz.chainstoresapp.roomdb.markedDatabase;
 import com.example.parinaz.chainstoresapp.roomdb.markedEntity;
 import com.example.parinaz.chainstoresapp.activity.ProductDetailsActivity;
@@ -34,7 +42,9 @@ public class marked_list_fragment extends Fragment {
     RecyclerView.OnItemTouchListener listener;
     Button retry;
     List<markedEntity> list;
-    List<MarkedProducts> list1;
+  //  List<MarkedProducts> list1;
+private MarkedViewModel markedViewModel;
+
 
     @Nullable
     @Override
@@ -50,6 +60,7 @@ public class marked_list_fragment extends Fragment {
         loading.setVisibility(View.VISIBLE);
         markedListRecycler = view.findViewById(R.id.marked_list_recycler);
         swipe = view.findViewById(R.id.marked_list_recycler_refresh);
+
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +126,7 @@ public class marked_list_fragment extends Fragment {
 
     public void loadMarkedProducts(){
 
-       list= markedDatabase.getInstance(getContext()).markedDAO().getAll();
+     //  list= markedDatabase.getInstance(getContext()).markedDAO().getAll();
 
         adapter = new MarkedProductsAdapter(list, AppController.getInstance().getStores(), getContext(), R.layout.product_list_item);
         if(markedListRecycler!= null) {
@@ -141,6 +152,16 @@ public class marked_list_fragment extends Fragment {
         }
         if (swipe.isRefreshing())
             swipe.setRefreshing(false);
+
+        markedViewModel= ViewModelProviders.of((FragmentActivity) getContext()).get(MarkedViewModel.class);
+        markedViewModel.getmAllmarked().observe((LifecycleOwner) getContext(), new Observer<List<markedEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<markedEntity> markedEntities) {
+                adapter.setMarked(markedEntities);
+            }
+        });
+
+
 
     }
 }
