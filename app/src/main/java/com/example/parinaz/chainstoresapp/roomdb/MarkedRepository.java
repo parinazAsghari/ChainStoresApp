@@ -26,4 +26,12 @@ public class MarkedRepository {
         markedDatabase.getInstance(context).markedDAO().insert(markedEntity);
 
     }
+
+    void delete(int code , int branchid){
+        markedDatabase.getInstance(context).markedDAO().deleteAll(code, branchid);
+    }
+
+    boolean ismarked(int code , int branchid){
+       return markedDatabase.getInstance(context).markedDAO().isMarked(code, branchid);
+    }
 }
