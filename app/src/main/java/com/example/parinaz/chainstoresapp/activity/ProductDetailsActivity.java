@@ -1,8 +1,11 @@
 package com.example.parinaz.chainstoresapp.activity;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.ToggleButton;
 import com.example.parinaz.chainstoresapp.AppController;
 //import com.example.parinaz.chainstoresapp.MarkedProductsDBHelper;
 import com.example.parinaz.chainstoresapp.R;
+import com.example.parinaz.chainstoresapp.roomdb.MarkedViewModel;
 import com.example.parinaz.chainstoresapp.roomdb.markedDatabase;
 import com.example.parinaz.chainstoresapp.roomdb.markedEntity;
 import com.example.parinaz.chainstoresapp.data.DataLoader;
@@ -42,6 +46,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
    // MarkedProductsDBHelper dbHelper ;
     markedEntity  markedEntity;
     List<markedEntity> markedp;
+    private MarkedViewModel markedViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
         intent = getIntent();
         //dbHelper = new MarkedProductsDBHelper(this);
+        markedViewModel= ViewModelProviders.of(this).get(MarkedViewModel.class);
         markedEntity   = new markedEntity();
         productId = intent.getIntExtra("productCode", 0);
         productName = intent.getStringExtra("productName");
@@ -116,7 +123,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
         //if(dbHelper.isMarked(productId , branchId)) {
-            if (markedDatabase.getInstance(getBaseContext()).markedDAO().isMarked(productId, branchId)) {
+            if (markedViewModel.ismarked(productId,branchId)) {
+              ////  markedDatabase.getInstance(getBaseContext()).markedDAO().isMarked(productId, branchId)(قبلا تو شرط ایف بوده)
                 Log.i("it is marked", "det");
 
                 mark.setChecked(true);
@@ -171,7 +179,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                    // markedp.add(markedEntity);
 
-                    markedDatabase.getInstance(getBaseContext()).markedDAO().insert(markedEntity);
+                    ////markedDatabase.getInstance(getBaseContext()).markedDAO().insert(markedEntity);(قبلا بود)
+                    markedViewModel.insert(markedEntity);
 
                     mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_on));
                 }
@@ -180,9 +189,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                    // Log.i("pp",markedEntity.getProduct_name());
 
-                   markedDatabase.getInstance(getBaseContext()).markedDAO().deleteAll(markedEntity.getProduct_code(),markedEntity.getProduct_branchid());
+                      ///// markedDatabase.getInstance(getBaseContext()).markedDAO().deleteAll(markedEntity.getProduct_code(),markedEntity.getProduct_branchid());(قبلا بود)
+                   markedViewModel.delete(markedEntity.getProduct_code(),markedEntity.getProduct_branchid());
                     // markedDatabase.getInstance(getBaseContext()).markedDAO().delete(markedEntity);
-                    Log.i("kk",markedDatabase.getInstance(getBaseContext()).markedDAO().getAll()+"");
+                   ///// Log.i("kk",markedDatabase.getInstance(getBaseContext()).markedDAO().getAll()+"");
 
 
                    // markedDatabase.getInstance(getBaseContext()).markedDAO().delete(markedEntity);
