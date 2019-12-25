@@ -10,7 +10,7 @@ import android.content.Context;
  */
 
 
-@Database(entities = {markedEntity.class},version = 2)
+@Database(entities = {markedEntity.class},version = 3)
 public abstract class markedDatabase extends RoomDatabase {
     private static markedDatabase instance;
     public abstract markedDAO markedDAO();
@@ -18,7 +18,7 @@ public abstract class markedDatabase extends RoomDatabase {
         //singleton repository(یک نفر میتونه تغییر بده.. با... get instance میتونیم بهش دسترسی پیدا کنیم)
         if(instance==null){
             //ینی تا حالا دیتابیس ایجاد نشده
-            instance= Room.databaseBuilder(context,markedDatabase.class,"marked_products_db").allowMainThreadQueries().build();
+            instance= Room.databaseBuilder(context,markedDatabase.class,"marked_products_db").fallbackToDestructiveMigration().build();
 
         }
         return instance;

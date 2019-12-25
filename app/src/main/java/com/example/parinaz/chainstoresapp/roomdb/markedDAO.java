@@ -3,10 +3,13 @@ package com.example.parinaz.chainstoresapp.roomdb;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
+
+import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
  * Created by parinaz on 11/18/19.
@@ -21,7 +24,7 @@ public interface markedDAO {
   boolean isMarked(int code , int branchid);
 
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(markedEntity...markedEntities);
 
 

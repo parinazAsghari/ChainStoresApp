@@ -19,6 +19,7 @@ import android.widget.ToggleButton;
 import com.example.parinaz.chainstoresapp.AppController;
 //import com.example.parinaz.chainstoresapp.MarkedProductsDBHelper;
 import com.example.parinaz.chainstoresapp.R;
+import com.example.parinaz.chainstoresapp.Runnable;
 import com.example.parinaz.chainstoresapp.roomdb.MarkedViewModel;
 import com.example.parinaz.chainstoresapp.roomdb.markedDatabase;
 import com.example.parinaz.chainstoresapp.roomdb.markedEntity;
@@ -123,19 +124,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
         //if(dbHelper.isMarked(productId , branchId)) {
-            if (markedViewModel.ismarked(productId,branchId)) {
+        markedViewModel.ismarked(productId, branchId, new Runnable() {
+            @Override
+            public void run(Boolean b) {
+
+                if (b){
+
+                    mark.setChecked(true);
+                    mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_on));
+
+                }
+                else{
+                    mark.setChecked(false);
+                    mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_off));
+
+                }
+            }
+        });
+           /* if (markedViewModel.ismarked(productId,branchId)) {
               ////  markedDatabase.getInstance(getBaseContext()).markedDAO().isMarked(productId, branchId)(قبلا تو شرط ایف بوده)
                 Log.i("it is marked", "det");
 
                 mark.setChecked(true);
                 mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_on));
             //}
-        }
-            else{
-                mark.setChecked(false);
-                mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_off));
+        }*/
 
-            }
         if(productStock == 0){
             stock.setVisibility(View.VISIBLE);
             reducedPrice.setVisibility(View.GONE);
@@ -180,9 +194,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
                    // markedp.add(markedEntity);
 
                     ////markedDatabase.getInstance(getBaseContext()).markedDAO().insert(markedEntity);(قبلا بود)
-                    markedViewModel.insert(markedEntity);
+                    markedViewModel.insert(markedEntity, new java.lang.Runnable() {
+                        @Override
+                        public void run() {
+                            mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_on));
+                        }
+                    });
 
-                    mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_on));
+
                 }
                 else{
 
@@ -190,14 +209,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
                    // Log.i("pp",markedEntity.getProduct_name());
 
                       ///// markedDatabase.getInstance(getBaseContext()).markedDAO().deleteAll(markedEntity.getProduct_code(),markedEntity.getProduct_branchid());(قبلا بود)
-                   markedViewModel.delete(markedEntity.getProduct_code(),markedEntity.getProduct_branchid());
+                   markedViewModel.delete(markedEntity.getProduct_code(), markedEntity.getProduct_branchid(), new java.lang.Runnable() {
+                       @Override
+                       public void run() {
+                           mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_off));
+                       }
+                   });
                     // markedDatabase.getInstance(getBaseContext()).markedDAO().delete(markedEntity);
                    ///// Log.i("kk",markedDatabase.getInstance(getBaseContext()).markedDAO().getAll()+"");
 
 
                    // markedDatabase.getInstance(getBaseContext()).markedDAO().delete(markedEntity);
                     //dbHelper.delete(productId , branchId);
-                    mark.setBackground(getResources().getDrawable(R.drawable.ic_mark_off));
+
 
                 }
 
