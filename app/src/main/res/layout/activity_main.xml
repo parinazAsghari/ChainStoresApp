@@ -28,6 +28,12 @@
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/live_btn"
+            style="@style/BottomMenuButton"
+            android:drawableTop="@drawable/ic_home"
+            android:text="@string/live_button_text"/>
+
+        <Button
             android:id="@+id/location_btn"
             style="@style/BottomMenuButton"
             android:drawableTop="@drawable/ic_location_unmarked"
