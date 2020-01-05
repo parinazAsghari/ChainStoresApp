@@ -6,6 +6,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.support.annotation.WorkerThread;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface markedDAO {
     @Query("SELECT * FROM marked_products WHERE code LIKE :code " + "  AND branchid LIKE :branchid LIMIT 1")
   boolean isMarked(int code , int branchid);
 
-
+    @WorkerThread
     @Insert(onConflict = REPLACE)
     void insert(markedEntity...markedEntities);
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.BinderThread;
+import android.support.annotation.MainThread;
 import android.support.annotation.WorkerThread;
 
 import com.example.parinaz.chainstoresapp.Runnable;
@@ -67,8 +68,9 @@ public class MarkedRepository {
         }.execute();
 
     }*/
-
+@MainThread
     public void insert(final markedEntity markedEntity, java.lang.Runnable runnable) {
+
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {

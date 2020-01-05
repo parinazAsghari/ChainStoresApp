@@ -26,6 +26,11 @@
         android:layout_marginTop="@dimen/Margin"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/dataBinding"
+            style="@style/BottomMenuButton"
+            android:drawableTop="@drawable/ic_home"
+            android:text="data"/>
 
         <Button
             android:id="@+id/live_btn"

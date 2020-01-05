@@ -24,6 +24,7 @@ import com.example.parinaz.chainstoresapp.R;
 import com.example.parinaz.chainstoresapp.data.DataLoader;
 import com.example.parinaz.chainstoresapp.data.VolleyCallbackStores;
 //import com.example.parinaz.chainstoresapp.fragment.SumFragment;
+import com.example.parinaz.chainstoresapp.databinding.databinding;
 import com.example.parinaz.chainstoresapp.fragment.CategoryFragment;
 import com.example.parinaz.chainstoresapp.fragment.HomeFragment;
 import com.example.parinaz.chainstoresapp.fragment.SearchFragment;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button bottomMenuHome, bottomMenuCategory, bottomMenuShoppingList, bottomMenuSearch, bottomMenuLocation, addnumbers;
+    Button bottomMenuHome, bottomMenuCategory, bottomMenuShoppingList, bottomMenuSearch, bottomMenuLocation, addnumbers,databinding;
     FragmentManager fragmentManager;
     //public static List<Store> stores ;
     GpsTracker gpstracker;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomMenuShoppingList = (Button) findViewById(R.id.marked_list_btn);
         bottomMenuLocation = (Button) findViewById(R.id.location_btn);
         addnumbers = (Button) findViewById(R.id.live_btn);
+        databinding=(Button) findViewById(R.id.dataBinding);
 
         locationSearchField = locationDialog.findViewById(R.id.location_search_field);
         locationSearchBtn = locationDialog.findViewById(R.id.location_search_btn);
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomMenuShoppingList.setOnClickListener(this);
         bottomMenuLocation.setOnClickListener(this);
         addnumbers.setOnClickListener(this);
+        databinding.setOnClickListener(this);
 
         userLocationBtn.setOnClickListener(this);
         locationSearchBtn.setOnClickListener(this);
@@ -242,6 +245,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Fragment f = fragmentManager.findFragmentById(R.id.fragment);
                 if(!( f instanceof SumFragment))
                     replaceFragment(new SumFragment());
+                break;
+
+
+            }
+            case R.id.dataBinding:{
+                Intent intent = new Intent(MainActivity.this, com.example.parinaz.chainstoresapp.databinding.databinding.class);
+                startActivity(intent);
                 break;
 
 

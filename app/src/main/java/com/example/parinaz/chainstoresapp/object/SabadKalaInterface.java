@@ -12,9 +12,9 @@ public interface SabadKalaInterface {
 
    List<Product> getPoducts(List<Product> products);
 
-    void addProduct(Product product);
+    List addProduct(Product product);
 
-    void removeProduct(Product product);
+     int removeProduct(Product product);
 
     Product getProductByCode(int code);
 }

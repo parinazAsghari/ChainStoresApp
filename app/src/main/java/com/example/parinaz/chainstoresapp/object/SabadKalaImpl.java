@@ -51,17 +51,15 @@ class SabadKalaImpl implements SabadKalaInterface {
     }
 
     @Override
-    public void addProduct(Product product) {
-
-
+    public List addProduct(Product product) {
         sabadKalaProducts.add(product);
-
+        return sabadKalaProducts;
     }
 
     @Override
-    public void removeProduct(Product product) {
-    getallProducts();
+    public int removeProduct(Product product) {
         sabadKalaProducts.remove(product);
+        return sabadKalaProducts.size();
 
     }
 

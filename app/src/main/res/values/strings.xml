@@ -35,8 +35,7 @@
     <string name="close_dialog_btn">بستن</string>
     <string name="setting_location_alert_btn">تنظیمات</string>
     <string name="location_alert_text">لوکیشن فعال نیست.برای فعال سازی به تنظیمات بروید.</string>
-<string name="live_button_text">جمع دو عدد</string>
-
+    <string name="live_button_text">جمع دو عدد</string>
 
 
     <string name="branches">برای مشاهده نزدیک ترین شعب فروشگاه ها کلیک کنید</string>
