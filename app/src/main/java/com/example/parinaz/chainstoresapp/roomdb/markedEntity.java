@@ -10,41 +10,41 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "marked_products")
 public class markedEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    public int  id;
 
-    @ColumnInfo(name="code")
+    //    public int  id;
+    @PrimaryKey
+    @ColumnInfo(name = "code")
     public int product_code;
 
- @ColumnInfo(name="name")
+    @ColumnInfo(name = "name")
     public String product_name;
 
- @ColumnInfo(name="price")
+    @ColumnInfo(name = "price")
     public int product_price;
 
- @ColumnInfo(name="discount")
+    @ColumnInfo(name = "discount")
     public int product_discount;
 
- @ColumnInfo(name="reducedprice")
+    @ColumnInfo(name = "reducedprice")
     public int product_reducedprice;
 
- @ColumnInfo(name="category")
+    @ColumnInfo(name = "category")
     public int product_category;
 
- @ColumnInfo(name="image")
-   public String product_image;
+    @ColumnInfo(name = "image")
+    public String product_image;
 
- @ColumnInfo(name="storeicon")
+    @ColumnInfo(name = "storeicon")
     public String product_storeicon;
 
 
-    @ColumnInfo(name="storename")
+    @ColumnInfo(name = "storename")
     public String product_storename;
 
-    @ColumnInfo(name="branchid")
+    @ColumnInfo(name = "branchid")
     public int product_branchid;
 
-    @ColumnInfo(name="stock")
+    @ColumnInfo(name = "stock")
     public int product_stock;
 
 
@@ -101,7 +101,7 @@ public class markedEntity {
     }
 
     public void setProduct_image(String product_image) {
-       this.product_image = product_image;
+        this.product_image = product_image;
     }
 
     public String getProduct_storeicon() {

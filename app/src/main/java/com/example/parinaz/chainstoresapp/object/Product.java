@@ -12,7 +12,7 @@ public class Product  {
     int price , discount , reducedPrice ;
     int stock ;
     int category ;
-    boolean isdeleted;
+  //  boolean isdeleted;
 
 
 
@@ -95,11 +95,11 @@ public class Product  {
     public void setStoreBranchId(int storeBranchId) {
         this.storeBranchId = storeBranchId;
     }
-    public boolean getIsdeleted() {
-        return isdeleted;
-    }
+  //  public boolean getIsdeleted() {
+    //    return isdeleted;
+    //}
 
-    public void setIsdeleted(boolean isdeleted) {
-        this.isdeleted = isdeleted;
-    }
+    //public void setIsdeleted(boolean isdeleted) {
+      //  this.isdeleted = isdeleted;
+    //}
 }

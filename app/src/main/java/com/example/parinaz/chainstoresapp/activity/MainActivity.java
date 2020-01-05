@@ -1,7 +1,6 @@
 package com.example.parinaz.chainstoresapp.activity;
 
 import android.app.Dialog;
-import android.arch.persistence.room.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,9 +23,13 @@ import com.example.parinaz.chainstoresapp.GpsTracker;
 import com.example.parinaz.chainstoresapp.R;
 import com.example.parinaz.chainstoresapp.data.DataLoader;
 import com.example.parinaz.chainstoresapp.data.VolleyCallbackStores;
+//import com.example.parinaz.chainstoresapp.fragment.SumFragment;
+import com.example.parinaz.chainstoresapp.databinding.databinding;
 import com.example.parinaz.chainstoresapp.fragment.CategoryFragment;
 import com.example.parinaz.chainstoresapp.fragment.HomeFragment;
 import com.example.parinaz.chainstoresapp.fragment.SearchFragment;
+
+import com.example.parinaz.chainstoresapp.fragment.SumFragment;
 import com.example.parinaz.chainstoresapp.fragment.marked_list_fragment;
 import com.example.parinaz.chainstoresapp.object.Store;
 
@@ -35,14 +38,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button bottomMenuHome, bottomMenuCategory, bottomMenuShoppingList, bottomMenuSearch , bottomMenuLocation;
+    Button bottomMenuHome, bottomMenuCategory, bottomMenuShoppingList, bottomMenuSearch, bottomMenuLocation, addnumbers,databinding;
     FragmentManager fragmentManager;
     //public static List<Store> stores ;
     GpsTracker gpstracker;
     EditText locationSearchField;
-    Button locationSearchBtn , userLocationBtn;
+    Button locationSearchBtn, userLocationBtn;
     List<Address> list;
-    Dialog locationDialog , locationSettingDialog;
+    Dialog locationDialog, locationSettingDialog;
     Button settings, cancel;
     private static final int PERMISSION_REQ_CODE = 1234;
 
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentManager = getSupportFragmentManager();
 
 
-      //  stores = new ArrayList<>();
+        //  stores = new ArrayList<>();
         locationDialog = new Dialog(MainActivity.this);
         locationDialog.setContentView(R.layout.location_dialog);
         locationDialog.getWindow().getAttributes().windowAnimations = R.style.AlertDialogAnimation;
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomMenuSearch = (Button) findViewById(R.id.search_btn);
         bottomMenuShoppingList = (Button) findViewById(R.id.marked_list_btn);
         bottomMenuLocation = (Button) findViewById(R.id.location_btn);
+        addnumbers = (Button) findViewById(R.id.live_btn);
+        databinding=(Button) findViewById(R.id.dataBinding);
 
         locationSearchField = locationDialog.findViewById(R.id.location_search_field);
         locationSearchBtn = locationDialog.findViewById(R.id.location_search_btn);
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomMenuSearch.setOnClickListener(this);
         bottomMenuShoppingList.setOnClickListener(this);
         bottomMenuLocation.setOnClickListener(this);
+        addnumbers.setOnClickListener(this);
+        databinding.setOnClickListener(this);
 
         userLocationBtn.setOnClickListener(this);
         locationSearchBtn.setOnClickListener(this);
@@ -90,21 +97,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cancel.setOnClickListener(this);
 
         Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-        if(f == null) {
+        if (f == null) {
             findUserLocation();
             replaceFragment(new HomeFragment());
             homeBtnDesign();
 
 
-        }else
+        } else
             reloadCurrentFragment();
 
 
     }
 
 
-
- public void findUserLocation() {
+    public void findUserLocation() {
        /* if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQ_CODE);
@@ -114,11 +120,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }*/
 
 
-           gpstracker = new GpsTracker(this);
-          if (gpstracker.canGetLocation()) {
-                  if (gpstracker.getLatitude() !=0 & gpstracker.getLongitude()!=0) {
-               AppController.getInstance().setLatitude(gpstracker.getLatitude());
-              AppController.getInstance().setLongitude(gpstracker.getLongitude());
+        gpstracker = new GpsTracker(this);
+        if (gpstracker.canGetLocation()) {
+           // if (gpstracker.getLatitude() != 0 & gpstracker.getLongitude() != 0) {
+                AppController.getInstance().setLatitude(gpstracker.getLatitude());
+                AppController.getInstance().setLongitude(gpstracker.getLongitude());
                 loadStores();
             }
             else {
@@ -126,11 +132,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
 
-           replaceFragment(new HomeFragment());
-        }
-        else{
-         findUserLocation();
-        }
+          //  replaceFragment(new HomeFragment());
+        //} else {
+          //  findUserLocation();
+        //}
 
     }
 
@@ -156,24 +161,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }*/
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode ==1 ){
-            Log.i("result main" , "!");
+        if (requestCode == 1) {
+            Log.i("result main", "!");
             findUserLocation();
         }
     }
 
-    public void loadStores(){
+    public void loadStores() {
         new DataLoader().getStores(getWindow().getDecorView().getRootView(), new VolleyCallbackStores() {
             @Override
             public void onSuccess(List<Store> list) {
                 AppController.getInstance().clearStores();
-               AppController.getInstance().setStores(list);
-               // Log.d("main stores", stores.size() + "");
+                AppController.getInstance().setStores(list);
+                // Log.d("main stores", stores.size() + "");
                 reloadCurrentFragment();
-               //replaceFragment(new HomeFragment());
+                //replaceFragment(new HomeFragment());
             }
         });
     }
@@ -182,18 +186,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-        if(f instanceof HomeFragment) {
+        if (f instanceof HomeFragment) {
             finish();
-        }
-        else {
+        } else {
             bottomMenuHome.setTextColor(getResources().getColor(R.color.button_selected));
-            bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_home_selected),null,null);
+            bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_home_selected), null, null);
             bottomMenuCategory.setTextColor(getResources().getColor(R.color.gray));
-            bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_list),null,null);
+            bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_list), null, null);
             bottomMenuSearch.setTextColor(getResources().getColor(R.color.gray));
-            bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_search),null,null);
+            bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_search), null, null);
             bottomMenuShoppingList.setTextColor(getResources().getColor(R.color.gray));
-            bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_checklist),null,null);
+            bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_checklist), null, null);
             replaceFragment(new HomeFragment());
         }
     }
@@ -204,14 +207,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.home_btn: {
                 homeBtnDesign();
                 Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-                if(!(f instanceof HomeFragment))
+                if (!(f instanceof HomeFragment))
                     replaceFragment(new HomeFragment());
                 break;
             }
+
             case R.id.category_btn: {
                 categoryBtnDesign();
                 Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-                if(!(f instanceof CategoryFragment))
+                if (!(f instanceof CategoryFragment))
                     replaceFragment(new CategoryFragment());
                 break;
             }
@@ -219,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.search_btn: {
                 searchBtnDesign();
                 Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-                if(!(f instanceof SearchFragment))
+                if (!(f instanceof SearchFragment))
                     replaceFragment(new SearchFragment());
                 break;
             }
@@ -227,21 +231,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.marked_list_btn: {
                 markedListBtnDesign();
                 Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-                if(!(f instanceof marked_list_fragment))
+                if (!(f instanceof marked_list_fragment))
                     replaceFragment(new marked_list_fragment());
                 break;
             }
-            case R.id.location_btn :{
+            case R.id.location_btn: {
                 locationBtnDesign();
                 locationDialog.show();
                 break;
             }
-            case R.id.location_search_btn :{
-                String key = "تهران"+locationSearchField.getText().toString().trim();
+
+            case R.id.live_btn:{
+                Fragment f = fragmentManager.findFragmentById(R.id.fragment);
+                if(!( f instanceof SumFragment))
+                    replaceFragment(new SumFragment());
+                break;
+
+
+            }
+            case R.id.dataBinding:{
+                Intent intent = new Intent(MainActivity.this, com.example.parinaz.chainstoresapp.databinding.databinding.class);
+                startActivity(intent);
+                break;
+
+
+            }
+            case R.id.location_search_btn: {
+                String key = "تهران" + locationSearchField.getText().toString().trim();
                 Geocoder gc = new Geocoder(MainActivity.this);
                 try {
-                    list=gc.getFromLocationName(key,5);
-                    if (list.size() != 0){
+                    list = gc.getFromLocationName(key, 5);
+                    if (list.size() != 0) {
                         Log.i("size", list.size() + "");
                         Address address = list.get(0);
                         AppController.getInstance().setLatitude(address.getLatitude());
@@ -249,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         loadStores();
                         reloadCurrentFragment();
                         locationDialog.dismiss();
-                    }else {
+                    } else {
                         Toast.makeText(MainActivity.this, "موقعیت مورد نظر یافت نشد.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
@@ -266,102 +286,110 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ///////////
                 break;
             }
-            case R.id.my_location_btn :{
-               findUserLocation();
+            case R.id.my_location_btn: {
+                findUserLocation();
                 locationDialog.dismiss();
                 break;
             }
-            case R.id.settings :{
+            case R.id.settings: {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(intent , 1);
+                startActivityForResult(intent, 1);
                 locationSettingDialog.dismiss();
                 break;
             }
-            case R.id.cancel :{
+            case R.id.cancel: {
                 locationSettingDialog.dismiss();
                 break;
             }
+
         }
 
     }
 
-    public void reloadCurrentFragment(){
+
+    public void reloadCurrentFragment() {
         Fragment f = fragmentManager.findFragmentById(R.id.fragment);
-        if(f instanceof HomeFragment) {
+        if (f instanceof HomeFragment) {
             replaceFragment(new HomeFragment());
             homeBtnDesign();
-        }else if(f instanceof CategoryFragment) {
+        } else if (f instanceof CategoryFragment) {
             replaceFragment(new CategoryFragment());
             categoryBtnDesign();
-        }else if(f instanceof marked_list_fragment) {
+        } else if (f instanceof marked_list_fragment) {
             replaceFragment(new marked_list_fragment());
             markedListBtnDesign();
-        }else if(f instanceof SearchFragment) {
+        } else if (f instanceof SearchFragment) {
             replaceFragment(new SearchFragment());
             searchBtnDesign();
         }
     }
-    public void searchBtnDesign(){
+
+    public void searchBtnDesign() {
         bottomMenuSearch.setTextColor(getResources().getColor(R.color.button_selected));
-        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_search_selected),null,null);
+        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_search_selected), null, null);
         bottomMenuHome.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_home),null,null);
+        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_home), null, null);
         bottomMenuCategory.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_list),null,null);
+        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_list), null, null);
         bottomMenuShoppingList.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_checklist),null,null);
+        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_checklist), null, null);
         bottomMenuLocation.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_location_unmarked),null,null);
+        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_location_unmarked), null, null);
     }
-    public void homeBtnDesign(){
+
+    public void homeBtnDesign() {
         bottomMenuHome.setTextColor(getResources().getColor(R.color.button_selected));
-        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_home_selected),null,null);
+        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_home_selected), null, null);
         bottomMenuCategory.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_list),null,null);
+        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_list), null, null);
         bottomMenuSearch.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_search),null,null);
+        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_search), null, null);
         bottomMenuShoppingList.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_checklist),null,null);
+        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_checklist), null, null);
         bottomMenuLocation.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_location_unmarked),null,null);
+        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_location_unmarked), null, null);
     }
-    public void markedListBtnDesign(){
+
+    public void markedListBtnDesign() {
         bottomMenuShoppingList.setTextColor(getResources().getColor(R.color.button_selected));
-        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_checklist_selected),null,null);
+        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_checklist_selected), null, null);
         bottomMenuHome.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_home),null,null);
+        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_home), null, null);
         bottomMenuCategory.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_list),null,null);
+        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_list), null, null);
         bottomMenuSearch.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_search),null,null);
+        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_search), null, null);
         bottomMenuLocation.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_location_unmarked),null,null);
+        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_location_unmarked), null, null);
     }
-    public void categoryBtnDesign(){
+
+    public void categoryBtnDesign() {
         bottomMenuCategory.setTextColor(getResources().getColor(R.color.button_selected));
-        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_list_selected),null,null);
+        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_list_selected), null, null);
         bottomMenuHome.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_home),null,null);
+        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_home), null, null);
         bottomMenuSearch.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_search),null,null);
+        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_search), null, null);
         bottomMenuShoppingList.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_checklist),null,null);
+        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_checklist), null, null);
         bottomMenuLocation.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_location_unmarked),null,null);
+        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_location_unmarked), null, null);
     }
-    public void locationBtnDesign(){
+
+    public void locationBtnDesign() {
         bottomMenuLocation.setTextColor(getResources().getColor(R.color.button_selected));
-        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_location_menu),null,null);
+        bottomMenuLocation.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_location_menu), null, null);
         bottomMenuHome.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_home),null,null);
+        bottomMenuHome.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_home), null, null);
         bottomMenuCategory.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_list),null,null);
+        bottomMenuCategory.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_list), null, null);
         bottomMenuSearch.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_search),null,null);
+        bottomMenuSearch.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_search), null, null);
         bottomMenuShoppingList.setTextColor(getResources().getColor(R.color.gray));
-        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.ic_checklist),null,null);
+        bottomMenuShoppingList.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_checklist), null, null);
     }
+
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment, fragment);
