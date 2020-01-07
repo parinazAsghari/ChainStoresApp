@@ -20,6 +20,12 @@ public class ViewModel extends android.arch.lifecycle.ViewModel  {
         if(accountData == null){
             accountData = new MutableLiveData<>();
         }
+        Account accountObject = new Account();
+        accountObject.setLastName("asghari");
+        accountObject.setUserName("parinaz");
+        accountObject.setEmailAddress("parinazasghari@gmail.com");
+        accountObject.setTime(System.currentTimeMillis()/1000);
+        accountData.setValue(accountObject);
 
     }
 
@@ -31,6 +37,7 @@ public class ViewModel extends android.arch.lifecycle.ViewModel  {
 
     public String getUsername() {
         return accountData.getValue().getUserName();
+
     }
 
 
@@ -41,5 +48,8 @@ public class ViewModel extends android.arch.lifecycle.ViewModel  {
 
     public String getEmail() {
         return accountData.getValue().getEmailAddress();
+    }
+    public long gettime(){
+        return accountData.getValue().gettime();
     }
 }

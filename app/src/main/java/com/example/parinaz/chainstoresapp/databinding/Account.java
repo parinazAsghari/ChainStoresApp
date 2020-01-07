@@ -9,6 +9,7 @@ public class Account {
     private String userName;
     private String lastName;
     private String emailAddress;
+    private long time;
 
     public String getUserName() {
         return this.userName;
@@ -24,11 +25,11 @@ public class Account {
 
     public void setUserName(String userName) {
         this.userName = userName;
-
-
     }
 
-
+    public void setTime(long time) {
+        this.time = time;
+    }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -39,5 +40,8 @@ public class Account {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+    public long gettime(){
+        return this.time;
     }
 }

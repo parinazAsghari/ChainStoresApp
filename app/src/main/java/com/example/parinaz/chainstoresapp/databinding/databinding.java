@@ -19,16 +19,13 @@ ActivityDataBindingBinding dataBindingBinding;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBindingBinding = DataBindingUtil.setContentView(this,R.layout.activity_data_binding);
-        Account accountObject = new Account();
-        accountObject.setLastName("asghari");
-        accountObject.setUserName("parinaz");
-        accountObject.setEmailAddress("parinazasghari@gmail.com");
+
        model= ViewModelProviders.of(this).get(ViewModel.class);
-       model.accountData.postValue(accountObject);
+
         model.getAccountData().observe(this, new Observer<Account>() {
             @Override
             public void onChanged(@Nullable Account accounts) {
-                //dataBindingBinding.setViewModel(model);
+              //  dataBindingBinding.setViewmodel(model);
 
 
             }

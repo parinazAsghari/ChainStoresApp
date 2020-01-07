@@ -30,6 +30,12 @@
         android:text="@{viewmodel.email}"
         android:textColor="@android:color/black"
        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{viewmodel.time}"
+        android:textColor="@android:color/black"
+        />
 
 </LinearLayout>
 
