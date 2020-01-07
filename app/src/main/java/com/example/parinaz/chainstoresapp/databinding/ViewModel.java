@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
@@ -15,14 +16,18 @@ import java.util.List;
 public class ViewModel extends android.arch.lifecycle.ViewModel  {
     public MutableLiveData<Account> accountData;
 
-
-    public LiveData<Account> getAccountData(){
+    public ViewModel() {
         if(accountData == null){
             accountData = new MutableLiveData<>();
         }
+
+    }
+
+    public LiveData<Account> getAccountData(){
+
         return accountData;
     }
-    
+
 
     public String getUsername() {
         return accountData.getValue().getUserName();

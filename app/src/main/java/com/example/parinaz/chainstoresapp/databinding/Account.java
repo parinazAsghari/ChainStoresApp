@@ -5,7 +5,7 @@ import android.databinding.Bindable;
 
 import com.android.databinding.library.baseAdapters.BR;
 
-public class Account extends BaseObservable {
+public class Account {
     private String userName;
     private String lastName;
     private String emailAddress;
