@@ -1,27 +1,40 @@
 package com.example.parinaz.chainstoresapp.databinding;
 
-public class ViewModel extends android.arch.lifecycle.ViewModel {
-    private String userName,lastName,emailAddress;
-    public void setUserName(String userName){
-        this.userName = userName;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.example.parinaz.chainstoresapp.roomdb.MarkedRepository;
+
+import java.util.List;
+
+public class ViewModel extends android.arch.lifecycle.ViewModel  {
+    public MutableLiveData<Account> accountData;
+
+
+    public LiveData<Account> getAccountData(){
+        if(accountData == null){
+            accountData = new MutableLiveData<>();
+        }
+        return accountData;
     }
-    public void  setLastName(String lastName){
-        this.lastName = lastName;
+    
+
+    public String getUsername() {
+        return accountData.getValue().getUserName();
     }
 
-   public  void setEmailAddress(String emailAddress){
-        this.emailAddress = emailAddress;
-   }
 
-    public String getUserName() {
-        return userName;
+    public String getLastname() {
+        return accountData.getValue().getLastName();
     }
 
-    public String getLastName() {
-        return lastName;
-    }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return accountData.getValue().getEmailAddress();
     }
 }

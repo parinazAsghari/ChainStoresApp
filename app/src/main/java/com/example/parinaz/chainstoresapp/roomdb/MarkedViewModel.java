@@ -16,15 +16,11 @@ public class MarkedViewModel extends AndroidViewModel {
     private MarkedRepository markedRepository;
 private LiveData<List<markedEntity>> mAllmarked;
 
-
-
-
   public MarkedViewModel(Application application) {
         super(application);
-
-              markedRepository = MarkedRepository.getinstance();
-              markedRepository.init(application.getApplicationContext());
-              mAllmarked=markedRepository.getmAllmarked();
+        markedRepository = MarkedRepository.getinstance();
+        markedRepository.init(application.getApplicationContext());
+        mAllmarked=markedRepository.getmAllmarked();
 
     }
 
